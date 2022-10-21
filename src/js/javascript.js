@@ -6,8 +6,8 @@ var controlFlow = {
     init: function() {
         this.cacheDom();
         this.render();
-        this.playerOne = this.playerCreator("one")
-        this.playerTwo = this.playerCreator("two")
+        this.playerOne = this.playerCreator("1")
+        this.playerTwo = this.playerCreator("2")
         this.gameBoard = {
             myBoard: ["n", "n", "n", "n", "n", "n", "n", "n", "n"],
             finished: false,
@@ -24,19 +24,23 @@ var controlFlow = {
         //add event where when button is clicked, it sets the cell
         //passes in string containing only cell number
         this.$buttons.forEach(element => {
-            element.addEventListener('click', () => setCell(element.id.slice(-1)));
+            element.addEventListener('click', () => this.setCell(element.id.slice(-1)));
         });
     },
 
     //sets cell depending on player click; chance current player
     //input: string that is cell number
     setCell: function(cellNum) {
-        addChoice(cellNum);
-        console.log("hello!")
+        //change board array
+        this.addChoice(cellNum);
+        console.log("here");
 
+        //set image in cell
+        
+    
         //change current player
         if (this.gameBoard.whichPlayer === '1') {
-            this.gameBoard.which = '2'
+            this.gameBoard.whichPlayer = '2';
         } else {this.gameBoard.whichPlayer = '1'}
 
         this.render();
@@ -50,7 +54,8 @@ var controlFlow = {
     //adds current choice to correct place in game array
     //input: string that is cell number
     addChoice: function(cellNum) {
-        this.gameBoard.myBoard[cellNum] = this.gameBoard.whichPlayer;
+        this.gameBoard.myBoard[cellNum - 1] = this.gameBoard.whichPlayer;
+        console.log(this.gameBoard.myBoard);
     },
 
     playerCreator: function(player) {
@@ -65,6 +70,7 @@ var controlFlow = {
 }
 
 controlFlow.init();
+
 
 
 
