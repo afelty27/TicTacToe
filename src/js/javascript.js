@@ -20,7 +20,8 @@ var controlFlow = {
     cacheDom: function() {
         this.$el = document.querySelector('.board');
         this.$buttons = this.$el.querySelectorAll(".choiceButton");
-        
+        this.$images = this.$el.querySelectorAll('img');
+        console.log(this.$images);
         //add event where when button is clicked, it sets the cell
         //passes in string containing only cell number
         this.$buttons.forEach(element => {
@@ -31,17 +32,16 @@ var controlFlow = {
     //sets cell depending on player click; chance current player
     //input: string that is cell number
     setCell: function(cellNum) {
-        //change board array
+        //change board array and set image
         this.addChoice(cellNum);
-        console.log("here");
-
-        //set image in cell
-        
+        this.setImage(cellNum);
     
         //change current player
         if (this.gameBoard.whichPlayer === '1') {
             this.gameBoard.whichPlayer = '2';
-        } else {this.gameBoard.whichPlayer = '1'}
+        } else {
+            this.gameBoard.whichPlayer = '1';
+        }
 
         this.render();
     },
@@ -61,6 +61,15 @@ var controlFlow = {
     playerCreator: function(player) {
         let whichPlayer = player;
         let result =  "Haven't won yet";
+    },
+
+    setImage: function(cellNum) {
+        console.log(cellNum);
+        if(this.gameBoard.whichPlayer === '1') {
+            this.$images[cellNum - 1].src = "./images/x.png";
+        } else {
+            this.$images[cellNum - 1].src = "./images/o.png";
+        }
     }
 
      //need bind events?
